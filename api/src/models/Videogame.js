@@ -1,9 +1,9 @@
-const { DataTypes, Sequelize } = require('sequelize');
+const { DataTypes, Sequelize } = require("sequelize");
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('videogame', {
+  sequelize.define("videogame", {
     id: {
       type: DataTypes.UUID,
       defaultValue: Sequelize.UUIDV4, //puede ser v1 o v4, es para que nos dé un ID único por asi decirlo
