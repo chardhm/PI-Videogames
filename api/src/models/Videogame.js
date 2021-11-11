@@ -28,7 +28,17 @@ module.exports = (sequelize) => {
     platform: {
       type: DataTypes.ARRAY(DataTypes.JSON),
       allowNull: false,
-    }
+    },
+     // Identifico que pertenece a la BD
+     db: {
+      type: DataTypes.STRING,
+      default: "Pertenece a la BD",
+    },
   });
-  ({timestamps: false});
+  /* ({timestamps: false}); */
+   // Me conecto a la BD desde el modelo "Genre"
+   sequelize
+   .authenticate()
+   .then(() => console.log("SUCCESFULL CONNECT TO DB VIDEOGAME"))
+   .catch((error) => console.log("ERROR DE CONEXIÓN: " + error));
 };
