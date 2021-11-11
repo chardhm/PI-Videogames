@@ -28,16 +28,17 @@ async function getGenres() {//llamado Genres de API
     const response = await axios.get(
       `https://api.rawg.io/api/genres?key=${API_KEY}`
     );
-     console.log(response.data.results);
-    const genres = response.data.results.map((item) => {
+     /* console.log(response.data.results); */
+    const genres = response.data.results.map((e) => {
       return {
-        id: item.id,
-        name: item.name,
+        id: e.id,
+        name: e.name,
       };
     });
 
-     console.log(genres);
+     /* console.log(genres); */
     addGenres(genres);
+    /* console.log("Se cargo perfectamente Genres a la BD"); */
   } catch (error) {
     console.error(error);
   }

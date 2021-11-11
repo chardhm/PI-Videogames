@@ -21,6 +21,10 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE,
       allowNull: true,
     },
+    background_image: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     rating: {
       type: DataTypes.REAL,
       allowNull: true,
@@ -28,7 +32,8 @@ module.exports = (sequelize) => {
     platform: {
       type: DataTypes.ARRAY(DataTypes.JSON),
       allowNull: false,
-    }
-  });
-  ({timestamps: false});
+    },
+  },
+  {timestamps: false}
+  );
 };
