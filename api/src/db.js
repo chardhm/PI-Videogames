@@ -41,3 +41,12 @@ module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
 };
+
+
+/*
+postgres=# \c videogames
+Ahora está conectado a la base de datos «videogames» con el usuario «postgres».
+
+videogames=# \dt
+             Listado de relaciones
+             */

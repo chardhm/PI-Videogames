@@ -162,15 +162,18 @@ router.post("/videogame", async (req, res) => {
   } = req.body;
 
   let platformsString = "";
-
+  //console.log(req);
+  //console.log(req.body.platforms);
+  //console.log(platforms); 
   // Guardo las plataformas en un string
   platforms.map(
     (platform) => (platformsString = platformsString + platform + " | ")
   );
+  
+
 
   let id = -1;
   let founded;
-
   // Busco un id disponible para el nuevo juego
   do {
     id++;
