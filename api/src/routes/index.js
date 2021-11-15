@@ -53,7 +53,7 @@ axios.get(`https://api.rawg.io/api/genres?key=${API_KEY}`).then((response) =>
 );
 
 // Configurar los routers
-router.get("/videogames", async (req, res) => {
+router.get("/videogames", async (req, res) => {//pista -> query
   const { name } = req.query;
   let found = [];
   let counter = 0;
