@@ -3,13 +3,19 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route } from "react-router-dom";
 import { store } from "./store/index";
 import { Provider } from "react-redux";
+import Home from "./components/Home/Home";
+
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <Route exact path="/" component={App} />
+      <Route path="/home" component={Home} />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

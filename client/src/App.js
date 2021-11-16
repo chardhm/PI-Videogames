@@ -1,10 +1,14 @@
 import "./App.css";
-import Inicio from "./components/Inicio/Inicio";
+import { Link } from "react-router-dom";
+import imgBg from "./img/1 (1).jpg";
 
 function App() {
   return (
     <div className="App">
-    <Inicio />
+       <Link to="/Inicio">Press Start!</Link>
+       <div className="imgBg">
+         <img src={imgBg} alt="" />
+       </div>
     </div>
   );
 }
