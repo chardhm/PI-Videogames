@@ -7,6 +7,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { store } from "./store/index";
 import { Provider } from "react-redux";
 import Home from "./components/Home/Home";
+import { Details } from "./components/VideoGamesDetails/VideoGamesDetails";
 
 
 ReactDOM.render(
@@ -14,6 +15,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Route exact path="/" component={App} />
       <Route path="/home" component={Home} />
+      <Route path="/videogame/:id" component={Details} />
     </Provider>
   </BrowserRouter>,
   document.getElementById("root")

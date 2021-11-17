@@ -4,11 +4,15 @@ export const SHOW_GENRES = "SHOW_GENRES";
 export const FILTER_GAMES_GENRE = "FILTER_GAMES_GENRE";
 export const ASCENDING_ORDER = "ASCENDING_ORDER";
 export const DESCENDING_ORDER = "DESCENDING_ORDER";
+export const HIGHER_RATING = "HIGHER_RATING";
+export const LOWER_RATING = "LOWER_RATING";
+export const SHOW_DETAILS = "SHOW_DETAILS";
+let id = 0;
 const axios = require("axios");
 
 export function showGames() {
   return function (dispatch) {
-    axios.get("http://localhost:3001").then((response) => {
+    axios.get("https://api.rawg.io/api/games?key=931b4e802056402a9ad13bc2c9e98c48").then((response) => {
       console.log(response.data.results);
       dispatch({ type: SHOW_GAMES, payload: response.data.results });
     });
@@ -49,4 +53,25 @@ export function showGenres() {
     return function (dispatch) {
       dispatch({ type: DESCENDING_ORDER, payload: array });
     };
-  }
+  };
+
+  export function higherRating(array) {
+    return function (dispatch) {
+      dispatch({ type: HIGHER_RATING, payload: array  });
+    };
+  };
+  
+  export function lowerRating(array) {
+    return function (dispatch) {
+      dispatch({ type: LOWER_RATING, payload: array });
+    };
+  };
+  
+  export function showDetails(pathname) {
+    return function (dispatch) {
+      axios.get(`http://localhost:3001${pathname}`).then((response) => {
+        console.log(response.data);
+        dispatch({ type: SHOW_DETAILS, payload: response.data });
+      });
+    };
+  };
