@@ -1,4 +1,4 @@
-import { SHOW_GAMES, SHOW_GENRES, FILTER_GAMES_GENRE, FILTER_GAMES_INPUT } from "../actions/actions";
+import { SHOW_GAMES, SHOW_GENRES, FILTER_GAMES_GENRE, FILTER_GAMES_INPUT, ASCENDING_ORDER, DESCENDING_ORDER } from "../actions/actions";
 
 let initialState = {
   details: {},
@@ -37,7 +37,34 @@ const todos = (state = initialState, action) => {
           } 
           return false;
         }),
-        
+      };
+      case ASCENDING_ORDER:
+      action.payload.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        games: action.payload,
+      };
+    case DESCENDING_ORDER:
+      action.payload.sort((a, b) => {
+        if (a.name < b.name) {
+          return 1;
+        }
+        if (a.name > b.name) {
+          return -1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        games: action.payload,
       };
     case SHOW_GENRES:
       return {

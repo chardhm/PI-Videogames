@@ -2,6 +2,8 @@ export const SHOW_GAMES = "SHOW_GAMES";
 export const FILTER_GAMES_INPUT = "FILTER_GAMES_INPUT";
 export const SHOW_GENRES = "SHOW_GENRES";
 export const FILTER_GAMES_GENRE = "FILTER_GAMES_GENRE";
+export const ASCENDING_ORDER = "ASCENDING_ORDER";
+export const DESCENDING_ORDER = "DESCENDING_ORDER";
 const axios = require("axios");
 
 export function showGames() {
@@ -36,3 +38,15 @@ export function showGenres() {
       dispatch({ type: FILTER_GAMES_GENRE, payload: array, genre: value });
     };
   };
+
+  export function ascendingOrder(array) {
+    return function (dispatch) {
+      dispatch({ type: ASCENDING_ORDER, payload: array  });
+    };
+  }
+  
+  export function descendingOrder(array) {
+    return function (dispatch) {
+      dispatch({ type: DESCENDING_ORDER, payload: array });
+    };
+  }
