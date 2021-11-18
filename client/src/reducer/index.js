@@ -1,9 +1,10 @@
-import { SHOW_GAMES, SHOW_GENRES, FILTER_GAMES_GENRE, FILTER_GAMES_INPUT, ASCENDING_ORDER, DESCENDING_ORDER, HIGHER_RATING, LOWER_RATING, SHOW_DETAILS } from "../actions/actions";
+import { SHOW_GAMES, SHOW_GENRES, FILTER_GAMES_GENRE, FILTER_GAMES_INPUT, ASCENDING_ORDER, DESCENDING_ORDER, HIGHER_RATING, LOWER_RATING, SHOW_DETAILS, ADD_GAME } from "../actions/actions";
 
 let initialState = {
   details: {},
   games: [],
   genres:[],
+  clickedGenre: false,
 };
 
 const todos = (state = initialState, action) => {
@@ -29,7 +30,10 @@ const todos = (state = initialState, action) => {
         filteredGames: action.payload.filter((game) => {
           let exist = false;
           game.genres.map((g) => {
-            if (g.name === action.genre) exist = true;
+            if (g.name === action.genre) {
+              exist = true;
+              console.log(g.name);
+            }
             return game;
           });
           if (exist) {
@@ -104,6 +108,8 @@ const todos = (state = initialState, action) => {
         ...state,
         details: action.payload,
       };
+      case ADD_GAME:
+      return state;
     default:
       return state;
   }

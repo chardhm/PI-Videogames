@@ -25,9 +25,7 @@ server.use((req, res, next) => {
 });
 
 server.use("/", routes);
-/* server.use("/videogames", videogamesRoutes);
-server.use("/videogame", videogameRoutes);
-server.use("/genres", genresRoutes); */
+
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars

@@ -7,7 +7,8 @@ export const DESCENDING_ORDER = "DESCENDING_ORDER";
 export const HIGHER_RATING = "HIGHER_RATING";
 export const LOWER_RATING = "LOWER_RATING";
 export const SHOW_DETAILS = "SHOW_DETAILS";
-let id = 0;
+export const ADD_GAME = "ADD_GAME";
+/* let id = 0; */
 const axios = require("axios");
 
 export function showGames() {
@@ -20,10 +21,7 @@ export function showGames() {
 }
 export function showGenres() {
     return function (dispatch) {
-      axios
-        .get(
-          "https://api.rawg.io/api/genres?key=931b4e802056402a9ad13bc2c9e98c48"
-        )
+      axios.get("https://api.rawg.io/api/genres?key=931b4e802056402a9ad13bc2c9e98c48")
         .then((response) => {
           console.log(response.data.results);
           dispatch({ type: SHOW_GENRES, payload: response.data.results });
@@ -45,7 +43,7 @@ export function showGenres() {
 
   export function ascendingOrder(array) {
     return function (dispatch) {
-      dispatch({ type: ASCENDING_ORDER, payload: array  });
+      dispatch({ type: ASCENDING_ORDER, payload: array });
     };
   }
   
@@ -57,7 +55,7 @@ export function showGenres() {
 
   export function higherRating(array) {
     return function (dispatch) {
-      dispatch({ type: HIGHER_RATING, payload: array  });
+      dispatch({ type: HIGHER_RATING, payload: array });
     };
   };
   
@@ -68,6 +66,7 @@ export function showGenres() {
   };
   
   export function showDetails(pathname) {
+    console.log(pathname);
     return function (dispatch) {
       axios.get(`http://localhost:3001${pathname}`).then((response) => {
         console.log(response.data);
@@ -75,3 +74,28 @@ export function showGenres() {
       });
     };
   };
+
+  export function addGame(
+    name,
+    background_image,
+    description,
+    released,
+    rating,
+    genres,
+    platforms
+  ) {
+    return function (dispatch) {
+      axios.post("http://localhost:3001/videogame", {
+        name,
+        background_image,
+        description,
+        released,
+        rating,
+        genres,
+        platforms,
+      })
+      .then((response) => {
+        dispatch({ type: ADD_GAME });
+      });
+    };
+  }

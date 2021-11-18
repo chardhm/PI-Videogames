@@ -1,9 +1,10 @@
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("genre", {
+    // Le asigno las propiedades
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -11,13 +12,11 @@ module.exports = (sequelize) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
   });
   // Me conecto a la BD desde el modelo "Genre"
   sequelize
-  .authenticate()
-  .then(() => console.log("SUCCESFULL CONNECT TO DB GENRE"))
-  .catch((error) => console.log("ERROR DE CONEXIÓN: " + error));
+    .authenticate()
+    .then(() => console.log("CONECTADO A LA BASE DE DATOS DE GENRE"))
+    .catch((error) => console.log("ERROR DE CONEXIÓN: " + error));
 };
-
