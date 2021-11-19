@@ -17,7 +17,7 @@ export default function Home(props) {
   const [rating, setRating] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, /* setPostsPerPage */] = useState(15);
+  const [postsPerPage, setPostsPerPage] = useState(15);
   const [loading, setLoading] = useState(true);
 
   const indexOfLastPost = currentPage * postsPerPage;
