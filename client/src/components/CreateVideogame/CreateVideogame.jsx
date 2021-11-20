@@ -19,6 +19,8 @@ export default function AddGame() {
   const [errors, setErrors] = useState({});
   const [checkbox, setCheckbox] = useState([]);
   const [checkboxPlatforms, setCheckboxPlatforms] = useState([]);
+  const [errorMsg, setErrorMsg] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(false);
 
   useEffect(() => {
     if (loading) {
@@ -91,7 +93,8 @@ export default function AddGame() {
   };
 
   const handleSubmit = function () {
-    if (Object.keys(validate(input)).length === 0) {
+    if (Object.keys(validate(input)).length === 0 && checkbox.length > 0 &&
+    checkboxPlatforms.length > 0) {
       dispatch(
         addGame(
           input.name,
@@ -103,134 +106,188 @@ export default function AddGame() {
           checkboxPlatforms
         )
       );
+      setErrorMsg(false);
+      setSuccessMsg(true);
+    } else {
+      setSuccessMsg(false);
+      setErrorMsg(true);
     }
   };
 
   return (
     <div className="bodyDetails">
+       {successMsg ? (
+        <div class="success show">
+          <span class="check">
+            <i class=""></i>
+          </span>
+          <span class="msg">Success: Game created succesfully!</span>
+          <span class="crose">
+            <i class=""></i>
+          </span>
+        </div>
+      ) : (
+        <p></p>
+      )}
+      {errorMsg ? (
+        <div class="error show">
+          <span class="check">
+            <i class=""></i>
+          </span>
+          <span class="msg-error">Error: Please, add platforms and genres!</span>
+          <span class="crose">
+            <i class=""></i>
+          </span>
+        </div>
+      ) : (
+        <p></p>
+      )}
       {loading ? (
         <p>Loading</p>
       ) : ( 
         <div className="containerForm">
           <div className="title">Registration</div>
         <Link to="/home"><button>Home</button></Link>
-        <form onSubmit={() => handleSubmit()}>
-            <div class="game-details">
-              <div class="input-box">
-                <span class="details">Name: </span>
-                <input
-                  className={errors.name && "danger"}
-                  type="text"
-                  name="name"
-                  placeholder="Enter name"
-                  onChange={handleInputChange}
-                  value={input.name}
-                />
-                {errors.name && <p className="danger">{errors.name}</p>}
-              </div>
-              <div class="input-box">
-                <span class="details">Description: </span>
-                <input
-                  className={errors.description && "danger"}
-                  type="text"
-                  name="description"
-                  placeholder="Enter description"
-                  onChange={handleInputChange}
-                  value={input.description}
-                />
-                {errors.description && (
-                  <p className="danger">{errors.description}</p>
-                )}
-              </div>
-              <div class="input-box">
-                <span class="details">Release date: </span>
-                <input
-                  type="text"
-                  name="released"
-                  placeholder="DD/MM/YY"
-                  onChange={handleInputChange}
-                  value={input.released}
-                />
-              </div>
-              <div class="input-box">
-                <span class="details">Rating: </span>
-                <input
-                  type="text"
-                  name="rating"
-                  onChange={handleInputChange}
-                  value={input.rating}
-                />
-              </div>
-              <div class="input-box">
-                <span class="details">Image: </span>
-                <input
-                  type="text"
-                  name="background_image"
-                  placeholder="Enter URL"
-                  onChange={handleInputChange}
-                  value={input.background_image}
-                />
-              </div>
+        <div class="game-details">
+            <div class="input-box">
+              <span class="details">Name: </span>
+              <input
+                className={errors.name && "danger"}
+                type="text"
+                name="name"
+                placeholder="Enter name"
+                onChange={handleInputChange}
+                value={input.name}
+              />
+              {errors.name && <p className="danger">{errors.name}</p>}
+            </div>
+            <div class="input-box">
+              <span class="details">Description: </span>
+              <input
+                className={errors.description && "danger"}
+                type="text"
+                name="description"
+                placeholder="Enter description"
+                onChange={handleInputChange}
+                value={input.description}
+              />
+              {errors.description && (
+                <p className="danger">{errors.description}</p>
+              )}
+            </div>
+            <div class="input-box">
+              <span class="details">Released: </span>
+              <input
+                type="text"
+                name="released"
+                placeholder="DD/MM/YY"
+                onChange={handleInputChange}
+                value={input.released}
+              />
+            </div>
+            <div class="input-box">
+              <span class="details">Rating: </span>
+              <input
+                type="text"
+                name="rating"
+                placeholder="Enter the rating"
+                onChange={handleInputChange}
+                value={input.rating}
+              />
+            </div>
+            <div class="input-box">
+              <span class="details">Image: </span>
+              <input
+                type="text"
+                name="background_image"
+                placeholder="Enter URL"
+                onChange={handleInputChange}
+                value={input.background_image}
+              />
+            </div>
+            </div>
 
-              <div class="gender-details">
-                <span class="gender-title">Genres: </span>
-                <div class="category">
-                  {genres.map((genre) => {
-                    return (
-                      <div>
-                        <input
-                          type="checkbox"
-                          name={genre.name}
-                          onChange={(e) => handleCheckboxChange(e)}
-                        />
-                        <label> {genre.name}</label>
-                      </div>
-                    );
-                  })}
+            <div class="gender-details">
+              <span class="gender-title">Genres: </span>
+              <div class="category">
+                {genres.map((genre) => {
+                  return (
+                    <div>
+                      <input
+                        type="checkbox"
+                        name={genre.name}
+                        onChange={(e) => handleCheckboxChange(e)}
+                      />
+                      <label> {genre.name}</label>
+                    </div>
+                  );
+                })}
+              </div>
+              </div>
+            <div class="gender-details">
+              <span class="gender-title">Platforms: </span>
+              <div class="category">
+                <div>
+                  <input
+                    name="Android"
+                    onChange={(e) => handleCheckboxPlatformsChange(e)}
+                    type="checkbox"
+                  />
+                  <span>Android</span>
+                </div>
+                <div>
+                  <input
+                    name="Apple Macintosh"
+                    onChange={(e) => handleCheckboxPlatformsChange(e)}
+                    type="checkbox"
+                  />
+                  <span>Apple Macintosh</span>
+                </div>
+                <div>
+                  <input
+                    name="Linux"
+                    onChange={(e) => handleCheckboxPlatformsChange(e)}
+                    type="checkbox"
+                  />
+                  <span>Linux</span>
+                </div>
+                <div>
+                  <input
+                    name="Nintendo"
+                    onChange={(e) => handleCheckboxPlatformsChange(e)}
+                    type="checkbox"
+                  />
+                  <span>Nintendo</span>
+                </div>
+                <div>
+                  <input
+                    name="PC"
+                    onChange={(e) => handleCheckboxPlatformsChange(e)}
+                    type="checkbox"
+                  />
+                  <span>PC</span>
+                </div>
+                <div>
+                  <input
+                    name="PlayStation"
+                    onChange={(e) => handleCheckboxPlatformsChange(e)}
+                    type="checkbox"
+                  />
+                  <span>PlayStation</span>
+                </div>
+                <div>
+                  <input
+                    name="XBOX"
+                    onChange={(e) => handleCheckboxPlatformsChange(e)}
+                    type="checkbox"
+                  />
+                  <span>XBOX</span>
                 </div>
               </div>
-              <div>
-                <input name="Android"
-                  onChange={(e) => handleCheckboxPlatformsChange(e)}
-                  type="checkbox"
-                />
-                <span>Android</span>
-                <input name="Apple Macintosh"
-                  onChange={(e) => handleCheckboxPlatformsChange(e)}
-                  type="checkbox"
-                />
-                <span>Apple Macintosh</span>
-                <input name="Linux"
-                  onChange={(e) => handleCheckboxPlatformsChange(e)}
-                  type="checkbox"
-                />
-                <span>Linux</span>
-                <input name="Nintendo"
-                  onChange={(e) => handleCheckboxPlatformsChange(e)}
-                  type="checkbox"
-                />
-                <span>Nintendo</span>
-                <input name="PC"
-                  onChange={(e) => handleCheckboxPlatformsChange(e)}
-                  type="checkbox"
-                />
-                <span>PC</span>
-                <input name="PlayStation"
-                  onChange={(e) => handleCheckboxPlatformsChange(e)}
-                  type="checkbox"
-                />
-                <span>PlayStation</span>
-                <input name="XBOX"
-                  onChange={(e) => handleCheckboxPlatformsChange(e)}
-                  type="checkbox"
-                />
-                <span>XBOX</span>
-              </div>
               <div class="button">
-                <button type="submit">Create videogame</button>
+                <button class ="btn" onClick={() => handleSubmit()}>Create videogame</button>
               </div>
             </div>
-          </form>
         </div>
       )}
     </div>

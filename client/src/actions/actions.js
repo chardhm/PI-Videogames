@@ -69,7 +69,7 @@ export function showGenres() {
     console.log(pathname);
     return function (dispatch) {
       axios.get(`http://localhost:3001${pathname}`).then((response) => {
-        console.log(response.data);
+        console.log(response);
         dispatch({ type: SHOW_DETAILS, payload: response.data });
       });
     };

@@ -54,14 +54,12 @@ export default function Home(props) {
       <div>
         <select
           onChange={(e) => {
-            console.log(e.target.value);
-            if (genre) setGenre(false);
-            else setGenre(true);
-            if (e.target.value !== 0) {
-              dispatch(filterForGenre(e.target.value, games));
-              setGenre(!genre);
+            if (e.target.value === 0) {
+              setGenre(false);
             } else {
-              setGenre(!genre);
+              setGenre(false);
+              dispatch(filterForGenre(e.target.value, games));
+              setGenre(true);
             }
           }}
         >
@@ -100,10 +98,20 @@ export default function Home(props) {
             } else setRating(false);
           }}
         >
-          <option selected value="0" disabled>Order by </option>
+          <option selected value="0" disabled>Order by rating</option>
           <option value="1">Best Rating</option>
           <option value="2">Worst Rating</option>
         </select>
+        <span></span>
+        <input
+          onChange={(e) => {
+            if (e.target.value.length !== 0) {
+              setAlphabetic(false);
+              dispatch(filterForInput(e.target.value, games));
+            }
+            setInput(e.target.value);
+          }}
+        />
         <Link to="/addGame"><button>Add videogame</button></Link>
       </div>
       <button onClick={() => prevPage()}>Previous page</button>
@@ -116,7 +124,7 @@ export default function Home(props) {
                 <h4>{game.name}</h4>
                 <p>{game.rating}</p>
                 <p>{game.genres.map((genre) => genre.name)}</p>
-                <Link to={(id) => `/videogame/${game.id}`}>Details...</Link>
+                <Link to={() => `/videogame/${game.id}`}>Details...</Link>
               </div>
             ))
           : filteredGames.map((game) => (
@@ -125,7 +133,7 @@ export default function Home(props) {
                 <h4>{game.name}</h4>
                 <p>{game.rating}</p>
                 <p>{game.genres.map((genre) => genre.name)}</p>
-                <Link to={(id) => `/videogame/${game.id}`}>Details...</Link>
+                <Link to={() => `/videogame/${game.id}`}>Details...</Link>
               </div>
             ))}
       </div>

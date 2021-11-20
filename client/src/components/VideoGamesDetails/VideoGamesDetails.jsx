@@ -47,7 +47,7 @@ export function Details(props) {
                   <span> {genre.name} | </span>
                 ))}
               </div>
-              <Link class="link-button" to="/home">Home</Link>
+              <Link class="link-button" to="/home">Back</Link>
             </div>
             <div class="content">
               <div class="content-body">
@@ -60,7 +60,7 @@ export function Details(props) {
           </div>
         </main>
       ) : (
-        <p>-----------------</p>
+        <p>Loading...</p>
       )}
     </>
   );
