@@ -1,16 +1,25 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showDetails } from "../../actions/actions";
+import { showDetails, clearDetail } from "../../actions/actions";
 import { Link } from "react-router-dom";
+import pacmanLoading from "../../img/pacman-loader.gif";
+import './VideoGamesDetails.css';
 
 export function Details(props) {
-  const dispatch = useDispatch();
+  // Obtengo los detalles
   const details = useSelector((state) => state.details);
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(true);
 
+  // Despues de mostrar el DOM..
   useEffect(() => {
     if (loading) {
-      console.log(window.location.pathname);
+      // Si está cargando entonces..
+      // Muestro los detalles por el id
+      
+      // EJ:
+      // window.location.pathname = "/videogame/3493"
       dispatch(showDetails(window.location.pathname));
     }
     setLoading(false);
@@ -18,41 +27,60 @@ export function Details(props) {
 
   return (
     <>
+      {/* Si se encontraron los detalles, mostrarlos */}
       {Object.keys(details).length !== 0 ? (
         <main>
-          <div class="container-details">
-            <div class="cover">
-              <img class="background" src={details.background_image} alt="" />
-              <div class="platforms">
-                <span class="rating">Rating: {details.rating}</span>
-                <img
-                  class="star"
+          <Link className="link" to="/home">
+            <button className="back-btn">Back</button>
+          </Link>
+          <div className="container-details">
+            <div className="cover">
+              <img className="background" src={details.background_image} />
+              <div className="ratingDetail">
+                <span>Rating: {details.rating}</span>
+              </div>
+              <div>
+              <img
+                  className="star"
                   src="https://www.medicoselite.com/wp-content/uploads/rating-medico.gif"
                   alt=""
                 />
               </div>
-              <div>
-                Platforms:
+              <div className="ratingDetail">
+                Platforms:<p></p>
                 {!details.hasOwnProperty("db") ? (
                   details.platforms.map((object) => (
-                    <span> {object.platform.name} | </span>
+                    <span> <img className ="platBtn" src="https://img.icons8.com/officexs/16/000000/circled-chevron-right.png"/> {object.platform.name} </span>
                   ))
                 ) : (
-                  <span> {details.platforms}</span>
+                  <span> <img className ="platBtn" src="https://img.icons8.com/officexs/16/000000/circled-chevron-right.png"/> {details.platforms}</span>
                 )}
               </div>
-              <div>
-                Genres:
+              <p></p>
+              <div className="ratingDetail">
+                Genres:<p></p>
                 {details.genres.map((genre) => (
-                  <span> {genre.name} | </span>
+                  <span> <img className ="platBtn" src="https://img.icons8.com/officexs/16/000000/circled-chevron-right.png"/> {genre.name} </span>
                 ))}
               </div>
-              <Link class="link-button" to="/home">Back</Link>
+              <p></p>
+              <div className="ratingDetail">
+                {/* Si no pertenece a la BD (pertenece a la API) entonces.. */}
+                {!details.hasOwnProperty("db") ? (
+                  <span>This game comes to the API.</span>
+                ) : (
+                  // Sino..
+                  <span>This game comes to the Database.</span>
+                )}
+              </div>
+              <p></p>
+              
             </div>
-            <div class="content">
-              <div class="content-body">
-                <div class="black-label">
-                  <span class="title">{details.name}</span>
+            <div className="content">
+              <div className="content-body">
+                <div className="black-label">
+                  <span className="title">{details.name}</span>
+                  {/* Uso el replaceAll para sacar las etiquetas "<p></p>" de la descripción*/}
                   <p>{details.description.replaceAll(/<\/?[^>]+(>|$)/g, "")}</p>
                 </div>
               </div>
@@ -60,7 +88,9 @@ export function Details(props) {
           </div>
         </main>
       ) : (
-        <p>Loading...</p>
+        {/* <p>Loading...</p> */},
+        
+          <img src={pacmanLoading} alt="" />
       )}
     </>
   );

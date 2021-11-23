@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const axios = require("axios");
-const response = require ("../app");
+const { response } = require ("../app");
 const { Videogame, Genre } = require("../db");
 const { Op } = require("sequelize");
 const { API_KEY } = process.env;

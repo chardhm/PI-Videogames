@@ -15,9 +15,9 @@ ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
       <Route exact path="/" component={App} />
-      <Route path="/home" component={Home} />
-      <Route path="/videogame/:id" component={Details} />
-      <Route exact path="/addGame" component={AddGame} />
+      <Route exact path="/home" component={Home} />
+      <Route exact path="/videogame/:id" component={Details} />
+      <Route exact path="/videogame" component={AddGame} />
     </Provider>
   </BrowserRouter>,
   document.getElementById("root")

@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { showGenres, addGame, } from "../../actions/actions";
+import './CreateVideogame.css'
 
 export default function AddGame() {
+  // Obtengo los géneros del store
   const genres = useSelector((state) => state.genres);
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(true);
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -22,19 +25,23 @@ export default function AddGame() {
   const [errorMsg, setErrorMsg] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
 
+  // Despues de mostrar el DOM..
   useEffect(() => {
+    // Si la página está cargando entonces..
     if (loading) {
-      dispatch(showGenres());
-      setLoading(false);
+      dispatch(showGenres()); // Muestro los géneros
+      setLoading(false); // La página ya cargó
     }
   });
 
   const handleInputChange = function (e) {
+    // Si el input cambia entonces obtener su valor
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
 
+    // Valida el dato escrito
     setErrors(
       validate({
         ...input,
@@ -46,10 +53,12 @@ export default function AddGame() {
   function validate(input) {
     let errors = {};
 
+    // Si no hay nombre
     if (!input.name) {
       errors.name = "Name is required";
     }
 
+    // Si no hay descripción
     if (!input.description) {
       errors.description = "Description is required";
     }
@@ -58,43 +67,59 @@ export default function AddGame() {
   }
 
   const handleCheckboxChange = function (e) {
+    // Si es la primera vez que se marca un género
     if (checkbox.length === 0) {
+      // Asigno su nombre al array checkbox
+      // EJ: checkbox = ["Action"]
       setCheckbox([e.target.name]);
     } else {
       let exist = false;
 
+      // Sino recorro el array checkbox y busco si ya tiene ese género
       for (let i = 0; i < checkbox.length; i++) {
         if (checkbox[i] === e.target.name) exist = true;
       }
 
+      // Si lo tiene lo saco del array (es porque estoy desmarcando la casilla)
       if (exist) setCheckbox(checkbox.filter((name) => name !== e.target.name));
+      // Sino lo sumo al array
       else setCheckbox([...checkbox, e.target.name]);
     }
-    console.log(checkbox);
   };
 
   const handleCheckboxPlatformsChange = function (e) {
+    // Si es la primera vez que se marca una plataforma
     if (checkboxPlatforms.length === 0) {
+      // Asigno su nombre al array checkboxPlatforms
+      // EJ: checkboxPlatforms = ["PC"]
       setCheckboxPlatforms([e.target.name]);
     } else {
       let exist = false;
 
+      // Sino recorro el array checkboxPlatforms y busco si ya tiene esa plataforma
       for (let i = 0; i < checkboxPlatforms.length; i++) {
         if (checkboxPlatforms[i] === e.target.name) exist = true;
       }
 
+      // Si lo tiene lo saco del array (es porque estoy desmarcando la casilla)
       if (exist)
         setCheckboxPlatforms(
           checkboxPlatforms.filter((name) => name !== e.target.name)
         );
+      // Sino lo sumo al array
       else setCheckboxPlatforms([...checkboxPlatforms, e.target.name]);
     }
-    console.log(checkboxPlatforms);
   };
 
+  // Si hago clic sobre el botón "Create videogame"
   const handleSubmit = function () {
-    if (Object.keys(validate(input)).length === 0 && checkbox.length > 0 &&
-    checkboxPlatforms.length > 0) {
+    if (
+      Object.keys(validate(input)).length === 0 &&
+      checkbox.length > 0 &&
+      checkboxPlatforms.length > 0
+    ) {
+      // Si está todo OK entonces..
+      // Despacho el juego
       dispatch(
         addGame(
           input.name,
@@ -106,53 +131,61 @@ export default function AddGame() {
           checkboxPlatforms
         )
       );
+      // Muestro un mensaje satisfactorio
       setErrorMsg(false);
       setSuccessMsg(true);
     } else {
+      // Sino muestro un mensaje de error
       setSuccessMsg(false);
       setErrorMsg(true);
     }
   };
 
+
   return (
     <div className="bodyDetails">
        {successMsg ? (
-        <div class="success show">
-          <span class="check">
-            <i class=""></i>
+        <div className="success show">
+          <span className="check">
+            <i className=""></i>
           </span>
-          <span class="msg">Success: Game created succesfully!</span>
-          <span class="crose">
-            <i class=""></i>
-          </span>
+          <span className="msg">Success: Game created succesfully!</span>
+          <a className="close"></a>
         </div>
       ) : (
         <p></p>
       )}
+      {/* Si hay un error entonces.. */}
       {errorMsg ? (
-        <div class="error show">
-          <span class="check">
-            <i class=""></i>
+        <div className="error show">
+          <span className="check">
+            <i className=""></i>
           </span>
-          <span class="msg-error">Error: Please, add platforms and genres!</span>
-          <span class="crose">
-            <i class=""></i>
+          <span className="msg-error">Error: Please, add platforms and genres!</span>
+          <span className="close">
+            <i className=""></i>
           </span>
         </div>
       ) : (
         <p></p>
       )}
+      {/* Si está cargando entonces.. */}
       {loading ? (
         <p>Loading</p>
       ) : ( 
+        <div className="caja">
+          <Link to="/home"><button className="home-btn">Home</button></Link>
+        <div class="button">
+          <button className ="btnAdd" onClick={() => handleSubmit()}>Create videogame</button>
+        </div>
         <div className="containerForm">
-          <div className="title">Registration</div>
-        <Link to="/home"><button>Home</button></Link>
-        <div class="game-details">
-            <div class="input-box">
-              <span class="details">Name: </span>
+          <div className="titleForm">Registration</div>
+        <div className="gameDetails">
+            <div className="inputBox">
+              <span className="formDetails">Name: </span>
               <input
                 className={errors.name && "danger"}
+                autocomplete="off"
                 type="text"
                 name="name"
                 placeholder="Enter name"
@@ -161,8 +194,8 @@ export default function AddGame() {
               />
               {errors.name && <p className="danger">{errors.name}</p>}
             </div>
-            <div class="input-box">
-              <span class="details">Description: </span>
+            <div className="inputBox">
+              <span className="formDetails">Description: </span>
               <input
                 className={errors.description && "danger"}
                 type="text"
@@ -175,8 +208,8 @@ export default function AddGame() {
                 <p className="danger">{errors.description}</p>
               )}
             </div>
-            <div class="input-box">
-              <span class="details">Released: </span>
+            <div className="inputBox">
+              <span className="formDetails">Released: </span>
               <input
                 type="text"
                 name="released"
@@ -185,8 +218,8 @@ export default function AddGame() {
                 value={input.released}
               />
             </div>
-            <div class="input-box">
-              <span class="details">Rating: </span>
+            <div className="inputBox">
+              <span className="formDetails">Rating: </span>
               <input
                 type="text"
                 name="rating"
@@ -195,8 +228,8 @@ export default function AddGame() {
                 value={input.rating}
               />
             </div>
-            <div class="input-box">
-              <span class="details">Image: </span>
+            <div className="inputBox">
+              <span className="formDetails">Image: </span>
               <input
                 type="text"
                 name="background_image"
@@ -205,11 +238,11 @@ export default function AddGame() {
                 value={input.background_image}
               />
             </div>
-            </div>
-
-            <div class="gender-details">
-              <span class="gender-title">Genres: </span>
-              <div class="category">
+            <p></p>
+            <div className="genresDetailss">
+              <span className="genresTitle">Genres: </span>
+              <div className="category">
+                {/* Muestro todos los géneros */}
                 {genres.map((genre) => {
                   return (
                     <div>
@@ -223,17 +256,19 @@ export default function AddGame() {
                   );
                 })}
               </div>
-              </div>
-            <div class="gender-details">
-              <span class="gender-title">Platforms: </span>
-              <div class="category">
+             </div>
+            </div>
+            <div className="platformsDetailss">
+              <span className="platformsTitle">Platforms: </span>
+              <div className="category">
                 <div>
                   <input
                     name="Android"
                     onChange={(e) => handleCheckboxPlatformsChange(e)}
                     type="checkbox"
                   />
-                  <span>Android</span>
+                  <span>Android </span>
+                  <img className="platIcn" src="https://img.icons8.com/color/48/000000/android-os.png"/>
                 </div>
                 <div>
                   <input
@@ -241,7 +276,8 @@ export default function AddGame() {
                     onChange={(e) => handleCheckboxPlatformsChange(e)}
                     type="checkbox"
                   />
-                  <span>Apple Macintosh</span>
+                  <span>Apple Macintosh </span>
+                  <img className="platIcn" src="https://img.icons8.com/fluency-systems-filled/48/000000/mac-client.png"/>
                 </div>
                 <div>
                   <input
@@ -249,7 +285,8 @@ export default function AddGame() {
                     onChange={(e) => handleCheckboxPlatformsChange(e)}
                     type="checkbox"
                   />
-                  <span>Linux</span>
+                  <span>Linux </span>
+                  <img class ="platIcn" src="https://img.icons8.com/color/48/000000/linux--v1.png"/>
                 </div>
                 <div>
                   <input
@@ -257,7 +294,8 @@ export default function AddGame() {
                     onChange={(e) => handleCheckboxPlatformsChange(e)}
                     type="checkbox"
                   />
-                  <span>Nintendo</span>
+                  <span>Nintendo </span>
+                  <img className="platIcn" src="https://img.icons8.com/color/48/000000/nintendo.png"/>
                 </div>
                 <div>
                   <input
@@ -265,7 +303,8 @@ export default function AddGame() {
                     onChange={(e) => handleCheckboxPlatformsChange(e)}
                     type="checkbox"
                   />
-                  <span>PC</span>
+                  <span>PC </span>
+                  <img className ="platIcn" src="https://img.icons8.com/office/16/000000/pc-on-desk.png"/>
                 </div>
                 <div>
                   <input
@@ -273,19 +312,19 @@ export default function AddGame() {
                     onChange={(e) => handleCheckboxPlatformsChange(e)}
                     type="checkbox"
                   />
-                  <span>PlayStation</span>
+                  <span>PlayStation </span>
+                  <img className ="platIcn" src="https://img.icons8.com/color/48/000000/play-station.png"/>
                 </div>
                 <div>
                   <input
-                    name="XBOX"
+                    name="Xbox"
                     onChange={(e) => handleCheckboxPlatformsChange(e)}
                     type="checkbox"
                   />
-                  <span>XBOX</span>
+                  <span>Xbox </span>
+                  <img className ="platIcn" src="https://img.icons8.com/color/48/000000/xbox--v1.png"/>
                 </div>
-              </div>
-              <div class="button">
-                <button class ="btn" onClick={() => handleSubmit()}>Create videogame</button>
+               </div>
               </div>
             </div>
         </div>

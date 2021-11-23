@@ -5,32 +5,30 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("videogame", {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: Sequelize.UUIDV4, //puede ser v1 o v4, es para que nos dé un ID único por asi decirlo
-      primaryKey: true,
-      allowNull: false, //allowNull permite que este vacio, false significa que no me permite que este vacio
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true, //allowNull permite que este vacio, false significa que no me permite que este vacio
     }, 
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     description: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     released: {
-      type: DataTypes.DATE,
-      allowNull: true,
+      type: DataTypes.STRING,
     },
     background_image: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     rating: {
-      type: DataTypes.REAL,
-      allowNull: true,
+      type: DataTypes.STRING,
     },
-    platform: {
-      type: DataTypes.ARRAY(DataTypes.JSON),
+    platforms: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
      // Identifico que pertenece a la BD

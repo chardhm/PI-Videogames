@@ -1,14 +1,15 @@
 import "./App.css";
 import { Link } from "react-router-dom";
-import imgBg from "./img/1 (1).jpg";
+import css from './App.css'
 
 function App() {
   return (
-    <div className="App">
-       <Link to="/Home">Press Start!</Link>
-       <div className="imgBg">
-         <img src={imgBg} alt="" />
-       </div>
+    <div className="landing">
+      <div className="buttonCont">
+       <Link to="/home">
+         <button className="buttonLanding">Insert Coin to Enter</button>
+       </Link>
+      </div>
     </div>
   );
 }
