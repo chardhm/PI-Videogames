@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showDetails, clearDetail } from "../../actions/actions";
 import { Link } from "react-router-dom";
-import pacmanLoading from "../../img/pacman-loader.gif";
+import pacmanLoading from "../../img/loading2.gif";
 import './VideoGamesDetails.css';
 
 export function Details(props) {
@@ -90,7 +90,8 @@ export function Details(props) {
       ) : (
         {/* <p>Loading...</p> */},
         
-          <img src={pacmanLoading} alt="" />
+          <img className="loadingImg" src={pacmanLoading} alt="" />
+          
       )}
     </>
   );

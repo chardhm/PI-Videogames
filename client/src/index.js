@@ -10,7 +10,6 @@ import Home from "./components/Home/Home";
 import { Details } from "./components/VideoGamesDetails/VideoGamesDetails";
 import AddGame from "./components/CreateVideogame/CreateVideogame"
 
-
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>

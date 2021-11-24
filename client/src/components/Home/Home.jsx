@@ -54,10 +54,10 @@ export default function Home(props) {
   return (
     <div className="pantalla">
       <div className="container-top">
-      
-        <span className="custom-arrow"></span>
+        <span className="customArrow"></span>
+        <Link to="/home"><button className="homeBtn">Home</button></Link>        
         <input
-          class="placeholder"
+          className="placeholder"
           placeholder="Search game..."
           onChange={(e) => {
             if (e.target.value.length !== 0) {
@@ -69,7 +69,7 @@ export default function Home(props) {
             setInput(e.target.value);
           }}
         />
-        <Link to="/videogame"><button class="btn">Add videogame{/* <i class="fas fa-plus"></i> */}</button></Link>
+        <Link to="/videogame"><button className="addGame">Add videogame{/* <i class="fas fa-plus"></i> */}</button></Link>
         <p></p>
         <select
           onChange={(e) => {
@@ -84,7 +84,7 @@ export default function Home(props) {
             }
           }}
         >
-          <option selected value="0">Choose genre</option>
+          <option className="cajita" selected value="0">Choose genre</option>
           {genres.map((genre) => (
             <option value={genre.name}>{genre.name}</option>
           ))}
@@ -141,15 +141,15 @@ export default function Home(props) {
         >
           
           <option selected value="0">
-            API or Database:
+            API or Database
           </option>
           <option value="api">API</option>
           <option value="db">DB</option>
         </select>
       </div>
       <div className="button-container">
-      <button className="btn" onClick={() => prevPage()}>Previous page</button>
-      <button className="btn" onClick={() => nextPage()}>Next page</button>
+      <button className="btnPag" onClick={() => prevPage()}>Previous page</button>
+      <button className="btnPag2" onClick={() => nextPage()}>Next page</button>
       </div>
       <div className="container">
         {(input.length === 0 || alphabetic || rating) && !genre && !apiOrDb

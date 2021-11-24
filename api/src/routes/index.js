@@ -74,7 +74,7 @@ router.get("/videogames", async (req, res) => {//pista -> query
     if (found.length > 0) {
       // Si se encontraron juegos entonces mostrarlos
       //console.log(found)
-      res.json(found);
+      res.status(200).json(found);
     }
     // Sino lanzar un mensaje de error
     else

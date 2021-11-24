@@ -211,7 +211,7 @@ export default function AddGame() {
             <div className="inputBox">
               <span className="formDetails">Released: </span>
               <input
-                type="text"
+                type="date"
                 name="released"
                 placeholder="DD/MM/YY"
                 onChange={handleInputChange}
@@ -221,9 +221,12 @@ export default function AddGame() {
             <div className="inputBox">
               <span className="formDetails">Rating: </span>
               <input
-                type="text"
+                type="number"
+                min="0"
+                max="5"
+                regex="\b([1-9]|10)\b"
                 name="rating"
-                placeholder="Enter the rating"
+                placeholder="Enter the rating from 0 to 5"
                 onChange={handleInputChange}
                 value={input.rating}
               />
