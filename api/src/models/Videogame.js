@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define("videogame", {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false,//este
       primaryKey: true, //allowNull permite que este vacio, false significa que no me permite que este vacio
     }, 
     name: {
@@ -22,14 +22,14 @@ module.exports = (sequelize) => {
     },
     background_image: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,//este
     },
     rating: {
       type: DataTypes.STRING,
     },
     platforms: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false,//este
     },
      // Identifico que pertenece a la BD
      db: {

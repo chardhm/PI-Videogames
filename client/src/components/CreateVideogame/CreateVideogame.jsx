@@ -161,7 +161,7 @@ export default function AddGame() {
           <span className="check">
             <i className=""></i>
           </span>
-          <span className="msg-error">Error: Please, add platforms and genres!</span>
+          <span className="msg-error">Error: Please, complet the form</span>
           <span className="close">
             <i className=""></i>
           </span>

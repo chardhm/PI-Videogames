@@ -6,8 +6,10 @@ const { Videogame, conn } = require('../../src/db.js');
 
 const agent = session(app);
 const videogame = {
+  id: 1,
   name: 'Super Mario Bros',
   description: 'Nostalgia',
+  platforms: "PC",
   genres: ["Family"]
 };
 
@@ -18,9 +20,13 @@ describe('Videogame routes', () => {
   }));
   beforeEach(() => Videogame.sync({ force: true })
     .then(() => Videogame.create(videogame)));
-  describe('GET api/genres', () => {
+  describe('GET /genres', () => {
     it('should get 200', async () =>
-      await agent.get('/api/genres').expect(200 || 304)
+      await agent.get('/genres').expect(200 || 304)
     );
+    it('should return a json', () =>
+      agent.get('/genres').then((res) => {
+        expect("Content-Type", /json/)
+      }));
   });
 });

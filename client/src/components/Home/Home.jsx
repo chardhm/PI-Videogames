@@ -86,7 +86,7 @@ export default function Home(props) {
         >
           <option className="cajita" selected value="0">Choose genre</option>
           {genres.map((genre) => (
-            <option value={genre.name}>{genre.name}</option>
+          <option value={genre.name}>{genre.name}</option>
           ))}
         </select>
         <span className="custom-arrow"></span>
