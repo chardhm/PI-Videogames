@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { filterForGenre, filterForInput, showGames, showGenres, ascendingOrder, descendingOrder, higherRating, lowerRating, APIorDB, API_OR_DB,} from "../../actions/actions";
 import './Home.css'
 
-export default function Home(props) {
+export default function Home() {
   const dispatch = useDispatch();
   const games = useSelector((state) => state.games);
   const filteredGames = useSelector((state) => {
@@ -39,6 +39,11 @@ export default function Home(props) {
     if (currentPage !== 1) setCurrentPage(currentPage - 1);
   };
 
+   //resetear filtros
+  const refreshPage = ()=>{
+    window.location.reload();  }
+
+
   // Después de cargar el DOM
   useEffect(() => {
     if (loading) {
@@ -65,11 +70,11 @@ export default function Home(props) {
               setAlphabetic(false);
               // Buscar los juegos que tengan esa letra o palabra
               dispatch(filterForInput(e.target.value, games));
-            }
+            } 
             setInput(e.target.value);
           }}
         />
-        <Link to="/videogame"><button className="addGame">Add videogame{/* <i class="fas fa-plus"></i> */}</button></Link>
+        <Link to="/videogame"><button className="addGame">Add videogame</button></Link>
         <p></p>
         <select
           onChange={(e) => {
@@ -85,8 +90,8 @@ export default function Home(props) {
           }}
         >
           <option className="cajita" selected value="0">Choose genre</option>
-          {genres.map((genre) => (
-          <option value={genre.name}>{genre.name}</option>
+          {genres.map((genre, i) => (
+          <option value={genre.name} key={i}>{genre.name}</option>
           ))}
         </select>
         <span className="custom-arrow"></span>
@@ -146,6 +151,7 @@ export default function Home(props) {
           <option value="api">API</option>
           <option value="db">DB</option>
         </select>
+        <button className ="resetFilters" type="submit" onClick={refreshPage}> Reset Filters</button>
       </div>
       <div className="button-container">
       <button className="btnPag" onClick={() => prevPage()}>Previous page</button>
@@ -154,26 +160,33 @@ export default function Home(props) {
       <div className="container">
         {(input.length === 0 || alphabetic || rating) && !genre && !apiOrDb
           ? // Si no buscaron ni filtraron nada entonces..
-            currentPosts.map((game) => (
-              <div class="card">
+            currentPosts.map((game, i) => (
+              <div className="card" key={i}>
                 <Link to={() => `/videogame/${game.id}`}>
-                <i class="fas fa-info-circle">i</i>
+                <i className="fas fa-info-circle">i</i>
                 </Link>
                 <h4>{game.name}</h4>
                 <img src={game.background_image} />
                 <p>⭐ {game.rating}</p>
                 <p>{game.genres.map((genre) => " ● " + genre.name)}</p>
+                {/* <p>{
+				          	game.genres.length <= 4
+				          	? game.genres?.map(genre => " ● " + genre.name)
+				          	: game.genres?.filter((genre,i) => i<6 && genre.name)
+				          					 .map(genre => " ● " + genre.name).join(",")
+				          					 .concat(' and more...')
+                }</p> */}
               </div>
             ))
           : // Sino mostrar el array de los juegos filtrados
-            filteredGames.map((game) => (
-              <div class="card">
+            filteredGames.map((game, i) => (
+              <div className="card" key={i}>
                 <Link className="detailsBtn" to={() => `/videogame/${game.id}`}>
-                <i class="fas fa-info-circle">i</i>
+                <i className="fas fa-info-circle">i</i>
                 </Link>
                 <h4>{game.name}</h4>
                 <img src={game.background_image} />
-                <p>⭐ {game.rating}</p>
+                <p>⭐ {game.rating || 'N/A'/*Not available*/}</p>
                 <p>{game.genres.map((genre) => " ● " + genre.name)}</p>
               </div>
             ))}

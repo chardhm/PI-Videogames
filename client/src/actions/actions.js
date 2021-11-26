@@ -14,17 +14,17 @@ let id = 0;
 const axios = require("axios");
 
 export function showGames() {
-  return function (dispatch) {
+  return async function (dispatch) {
     // Llamo al backend para obtener todos los juegos y los despacho
-    axios.get("http://localhost:3001/videogames").then((response) => {
+    await axios.get("http://localhost:3001/videogames").then((response) => {
       dispatch({ type: SHOW_GAMES, payload: response.data });
     });
   };
 }
 export function showGenres() {
-  return function (dispatch) {
+  return async function (dispatch) {
     // Llamo al backend para obtener todos los géneros y los despacho
-    axios.get("http://localhost:3001/genres").then((response) => {
+    await axios.get("http://localhost:3001/genres").then((response) => {
       console.log(response.data);
       dispatch({ type: SHOW_GENRES, payload: response.data });
     });
@@ -32,10 +32,15 @@ export function showGenres() {
 }
   
 export function filterForInput(value, array) {
+  try {
   return function (dispatch) {
     // Despacho el tipo, los juegos y el valor del input
     dispatch({ type: FILTER_GAMES_INPUT, payload: array, query: value });
   };
+}
+catch (error) {
+  console.error(error)
+}
 }
   
 export function filterForGenre(value, array) {
@@ -104,17 +109,16 @@ export function addGame(
   return function (dispatch) {
     // Llamo al backend y le paso las propiedades para que se encargue de crear el juego.
     // Despacho solo el tipo.
-    axios
-      .post("http://localhost:3001/videogame", {
+    axios.post("http://localhost:3001/videogame", {
         name,
-        background_image,
+        background_image, //"https://cms-assets.tutsplus.com/cdn-cgi/image/width=850/uploads/users/523/posts/26905/final_image/game-boy-illustration-finished.png"
         description,
         released,
         rating,
         genres,
         platforms,
-      })
-      .then((response) => {
+    })
+      .then(() => {
         dispatch({ type: ADD_GAME });
       });
   };

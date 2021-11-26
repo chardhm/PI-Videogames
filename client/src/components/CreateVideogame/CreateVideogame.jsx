@@ -171,7 +171,7 @@ export default function AddGame() {
       )}
       {/* Si está cargando entonces.. */}
       {loading ? (
-        <p>Loading</p>
+        <p>Loading...</p>
       ) : ( 
         <div className="caja">
           <Link to="/home"><button className="home-btn">Home</button></Link>
@@ -224,7 +224,7 @@ export default function AddGame() {
                 type="number"
                 min="0"
                 max="5"
-                regex="\b([1-9]|10)\b"
+                id="age"
                 name="rating"
                 placeholder="Enter the rating from 0 to 5"
                 onChange={handleInputChange}

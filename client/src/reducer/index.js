@@ -16,8 +16,8 @@ const todos = (state = initialState, action) => {
       };
     case FILTER_GAMES_INPUT:
       // Guardo los juegos filtrados por el valor del input en la store
-      // EJ: input("Tomb")
-      // filteredGames = ["Tomb Raider"]
+      // EJ: input("The")
+      // filteredGames = ["The ..."]
 
       return {
         ...state,
@@ -48,6 +48,7 @@ const todos = (state = initialState, action) => {
           if (exist) return game;
         }),
       };
+
 
     case ASCENDING_ORDER:
       // Los ordeno en forma ascendente
